@@ -61,7 +61,7 @@ fetch('words.json')
     });
 
 function populateDropdown(selectElement, wordSet) {
-    selectElement.innerHTML = '<option value="" disabled selected>-- 选择词汇列表 --</option>';
+    selectElement.innerHTML = '<option value="" disabled selected>-- 选择主题词汇列表 --</option>';
     Object.keys(wordSet).forEach(theme => {
         const option = document.createElement('option');
         option.value = theme;
@@ -374,3 +374,4 @@ if (showAnswerBtn) {
 } else {
     console.warn('Show answer button not found');
 }
+
