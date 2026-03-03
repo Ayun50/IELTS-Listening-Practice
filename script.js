@@ -1,7 +1,7 @@
 // Global variables
-let leftWords = {};          // { theme: [wordObjects] }
+let leftWords = {};
 let rightWords = {};
-let currentList = null;      // 'left' or 'right'
+let currentList = null;
 let filteredWords = [];
 let currentWordIndex = 0;
 let currentWordObject = null;
@@ -61,7 +61,6 @@ fetch('words.json')
     });
 
 function populateDropdown(selectElement, wordSet) {
-    // Clear existing options except the placeholder
     selectElement.innerHTML = '<option value="" disabled selected>-- 选择词汇列表 --</option>';
     Object.keys(wordSet).forEach(theme => {
         const option = document.createElement('option');
@@ -95,12 +94,14 @@ themeRight.addEventListener('change', (e) => {
 });
 
 function loadThemeWords(wordArray, themeName) {
-    // Convert plain word objects to include the theme property
+    // 为每个单词对象添加默认字段（若缺失）
     filteredWords = wordArray.map(w => ({
         word: w.word,
         translation: w.translation,
         tip: w.tip,
-        theme: themeName
+        theme: themeName,
+        caseSensitive: w.caseSensitive || false,
+        variants: w.variants || [w.word]
     }));
     shuffleArray(filteredWords);
     resetStats();
@@ -114,7 +115,7 @@ function loadThemeWords(wordArray, themeName) {
     }
 }
 
-// Timer functions (unchanged)
+// Timer functions
 function startTimer() {
     if (timerRunning) return;
     timerRunning = true;
@@ -235,13 +236,14 @@ function updateLetterBoxes() {
     if (!currentWordObject) return;
     const value = hiddenInput.value;
     const boxes = document.querySelectorAll('.letter-box');
+    // 盒子总数基于主单词长度（即当前显示的长度）
     const maxLength = firstWordLength + secondWordLength + (secondWordLength > 0 ? 1 : 0);
     if (value.length > maxLength) hiddenInput.value = value.slice(0, maxLength);
     boxes.forEach(box => box.textContent = '');
     let boxIndex = 0;
     for (let i = 0; i < hiddenInput.value.length; i++) {
         const char = hiddenInput.value[i];
-        if (secondWordLength > 0 && i === firstWordLength) continue;
+        if (secondWordLength > 0 && i === firstWordLength) continue; // 跳过两词之间的空格（由布局自动处理）
         if (boxIndex < boxes.length) {
             const box = boxes[boxIndex];
             if (box.dataset.space === 'true') {
@@ -277,24 +279,50 @@ actionBtn.addEventListener('click', () => {
     if (mode === 'check') checkAnswer();
     else goToNextWord();
 });
+
+// 修改后的检查答案函数，支持变体和大小写敏感
 function checkAnswer() {
     if (!currentWordObject || mode !== 'check' || answeredCorrectly) return;
+
     const isFirstAttempt = !hasAttemptedCurrent;
     if (isFirstAttempt) {
         totalAttempted++;
         hasAttemptedCurrent = true;
     }
-    const userAnswer = hiddenInput.value.trim().toLowerCase();
-    const correctWord = currentWordObject.word.toLowerCase();
-    const expectedLength = firstWordLength + secondWordLength + (secondWordLength > 0 ? 1 : 0);
-    if (userAnswer.length !== expectedLength) {
-        messageDiv.textContent = `请完整输入 ${expectedLength} 个字符`;
+
+    const userAnswer = hiddenInput.value; // 不trim也不小写，保留原样用于大小写敏感判断
+    const variants = currentWordObject.variants || [currentWordObject.word];
+    const caseSensitive = currentWordObject.caseSensitive || false;
+
+    // 检查长度是否匹配任一变体
+    const validLengths = variants.map(v => v.length);
+    if (!validLengths.includes(userAnswer.length)) {
+        const lengthHint = validLengths.length === 1 ? `${validLengths[0]}个字符` : `${validLengths.join(' 或 ')}个字符`;
+        messageDiv.textContent = `长度应为 ${lengthHint}`;
         messageDiv.classList.add('error');
         updateStats();
         hiddenInput.focus();
         return;
     }
-    if (userAnswer === correctWord) {
+
+    // 找到长度匹配的变体，再比较内容
+    const possibleMatches = variants.filter(v => v.length === userAnswer.length);
+    let match = false;
+    for (let variant of possibleMatches) {
+        if (caseSensitive) {
+            if (userAnswer === variant) {
+                match = true;
+                break;
+            }
+        } else {
+            if (userAnswer.toLowerCase() === variant.toLowerCase()) {
+                match = true;
+                break;
+            }
+        }
+    }
+
+    if (match) {
         if (isFirstAttempt) correctFirstAttempt++;
         answeredCorrectly = true;
         messageDiv.textContent = '✅ 正确！';
@@ -313,6 +341,7 @@ function checkAnswer() {
     }
     updateStats();
 }
+
 function goToNextWord() {
     if (filteredWords.length === 0) return;
     currentWordIndex = (currentWordIndex + 1) % filteredWords.length;
@@ -324,19 +353,22 @@ function speakWord(word) {
     utterance.lang = 'en-US';
     window.speechSynthesis.speak(utterance);
 }
+
+// 修改后的显示答案函数：填充主单词（不参与正确率统计）
 function revealAnswer() {
     if (!currentWordObject || answeredCorrectly) return;
-    hiddenInput.value = currentWordObject.word;
+    hiddenInput.value = currentWordObject.word; // 显示主单词
     updateLetterBoxes();
     translationDiv.textContent = currentWordObject.translation;
-    messageDiv.textContent = 'Answer revealed. Moving to next word.';
+    messageDiv.textContent = '答案已显示，自动进入下一个单词';
     messageDiv.classList.add('success');
-    answeredCorrectly = true;
+    answeredCorrectly = true; // 标记为已回答，不再计入统计
     mode = 'next';
-    actionBtn.textContent = 'Next Word';
+    actionBtn.textContent = '下一个';
     hiddenInput.disabled = true;
     actionBtn.focus();
 }
+
 if (showAnswerBtn) {
     showAnswerBtn.addEventListener('click', revealAnswer);
 } else {
