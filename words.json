@@ -121,7 +121,7 @@
             { "word": "endangered", "translation": "adj. 濒危的", "tip": "at risk of extinction" },
             { "word": "boat", "translation": "n. 船", "tip": "a small vessel for traveling on water" },
             { "word": "trip", "translation": "n. 旅行", "tip": "a journey or excursion" },
-            { "word": "harbor", "translation": "n. 港口", "tip": "a place on the coast where ships may moor in shelter (美式英式拼写皆可)", "variants": ["harbor", "harbour"] },
+            { "word": "harbor", "translation": "n. 港口", "tip": "a place on the coast where ships may moor in shelter (美式英式拼皆可)", "variants": ["harbor", "harbour"] },
             { "word": "bridge", "translation": "n. 桥", "tip": "a structure carrying a road or path across an obstacle" },
             { "word": "rose", "translation": "n. 玫瑰", "tip": "a prickly shrub with showy flowers" },
             { "word": "sign", "translation": "n. 标志", "tip": "an object displaying information or giving direction" },
@@ -221,7 +221,6 @@
             { "word": "trust", "translation": "n. 信任", "tip": "firm belief in the reliability or truth of someone or something" },
             { "word": "receptionist", "translation": "n. 接待员", "tip": "a person employed in an office to greet visitors and answer calls" },
             { "word": "medical", "translation": "adj. 医疗的", "tip": "relating to the science or practice of medicine" },
-            { "word": "chastons", "translation": "n. 查斯顿", "tip": "a proper noun, possibly a place name or surname" },
             { "word": "appointments", "translation": "n. 预约", "tip": "arrangements to meet someone at a particular time and place" },
             { "word": "database", "translation": "n. 数据库", "tip": "a structured set of data held in a computer" },
             { "word": "experience", "translation": "n. 经验", "tip": "practical contact with and observation of facts or events" },
@@ -235,7 +234,7 @@
             { "word": "drawings", "translation": "n. 绘画", "tip": "pictures or diagrams made with a pencil, pen, or crayon" },
             { "word": "furniture", "translation": "n. 家具", "tip": "movable objects intended to support various human activities" },
             { "word": "lamps", "translation": "n. 灯", "tip": "devices for giving light, either by electricity or a flame" },
-            { "word": "harbor", "translation": "n. 港口", "tip": "a place on the coast where ships may moor in shelter (美式英式拼写皆可)", "variants": ["harbor", "harbour"] },
+            { "word": "harbor", "translation": "n. 港口", "tip": "a place on the coast where ships may moor in shelter (美式英式拼皆可)", "variants": ["harbor", "harbour"] },
             { "word": "children", "translation": "n. 儿童", "tip": "young human beings below the age of puberty" },
             { "word": "relatives", "translation": "n. 亲戚", "tip": "people connected by blood or marriage" }
         ]
