@@ -185,7 +185,7 @@ function loadWord(index) {
     const longestVariant = variants.reduce((a, b) => a.length >= b.length ? a : b);
     createLetterBoxes(longestVariant);   // 用最长变体创建框
     
-    tipDiv.textContent = '';   // 隐藏 tip
+    tipDiv.textContent = '💡 Tip: ';   // 隐藏 tip
     translationDiv.textContent = '';
     messageDiv.textContent = '';
     messageDiv.classList.remove('error', 'success');
@@ -380,3 +380,4 @@ if (showAnswerBtn) {
 } else {
     console.warn('Show answer button not found');
 }
+
