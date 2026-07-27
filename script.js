@@ -206,20 +206,50 @@ function selectDisplayVariant(input) {
 
 function renderLetterBoxes(pattern, value) {
     letterBoxesDiv.innerHTML = "";
-    const row = document.createElement("div");
-    row.className = "word-row";
-    [...pattern].forEach((char, index) => {
-        const box = document.createElement("span");
-        box.className = "letter-box";
-        if (char === " ") {
-            box.dataset.space = "true";
-            box.textContent = value[index] === " " || !value[index] ? "·" : value[index];
+
+    const words = pattern.trim().split(/\s+/);
+    const splitIntoTwoLines =
+        words.length === 2 && pattern.length > 16;
+
+    let patternIndex = 0;
+
+    words.forEach((word, wordIndex) => {
+        // Long two-word phrases: each word gets its own line.
+        // Short phrases: both words remain in the same row.
+        let row;
+
+        if (splitIntoTwoLines || wordIndex === 0) {
+            row = document.createElement("div");
+            row.className = "word-row";
+            letterBoxesDiv.appendChild(row);
         } else {
-            box.textContent = value[index] || "";
+            row = letterBoxesDiv.lastElementChild;
+
+            // Add the visible space box between words.
+            const spaceBox = document.createElement("span");
+            spaceBox.className = "letter-box";
+            spaceBox.dataset.space = "true";
+            spaceBox.textContent =
+                value[patternIndex] === " " || !value[patternIndex]
+                    ? "·"
+                    : value[patternIndex];
+
+            row.appendChild(spaceBox);
         }
-        row.appendChild(box);
+
+        // Skip the real space character in the input position.
+        if (wordIndex > 0) {
+            patternIndex += 1;
+        }
+
+        [...word].forEach(() => {
+            const box = document.createElement("span");
+            box.className = "letter-box";
+            box.textContent = value[patternIndex] || "";
+            row.appendChild(box);
+            patternIndex += 1;
+        });
     });
-    letterBoxesDiv.appendChild(row);
 }
 
 function checkAnswer() {

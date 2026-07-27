@@ -142,6 +142,12 @@ h1 {
     width: 100%;
 }
 
+.letter-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .letter-box {
     width: 2.5rem;
     height: 3rem;
