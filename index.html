@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <meta name="description" content="雅思听力高频词汇听写练习工具">
     <title>IELTS Listening Vocabulary Practice</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="https://app-writeup.britishcouncilexams.cn/favicon.ico">
@@ -11,54 +12,40 @@
     <div class="container">
         <header>
             <h1>雅思听力高频单词听写</h1>
-            <div class="stats">
+            <div class="stats" aria-label="练习统计">
                 <span>已练: <span id="total-attempts">0</span></span>
                 <span>正确: <span id="correct-count">0</span></span>
                 <span>正确率: <span id="accuracy">0</span>%</span>
             </div>
         </header>
-
-        <!-- NEW: Word count and timer display -->
         <div class="info-bar">
             <span>词汇总数: <span id="word-count">0</span></span>
             <span>计时: <span id="timer-display">00:00</span></span>
         </div>
-
         <main>
             <div class="theme-selector">
-                <select id="theme-left" class="theme-select">
-                    <option value="" disabled selected>-- 剑桥雅思词汇列表 --</option>
-                </select>
-                <select id="theme-right" class="theme-select">
-                    <option value="" disabled selected>-- 主题分类词汇列表 --</option>
-                </select>
+                <label class="sr-only" for="theme-left">剑桥雅思词汇列表</label>
+                <select id="theme-left" class="theme-select"><option value="" disabled selected>-- 剑桥雅思词汇列表 --</option></select>
+                <label class="sr-only" for="theme-right">主题分类词汇列表</label>
+                <select id="theme-right" class="theme-select"><option value="" disabled selected>-- 主题分类词汇列表 --</option></select>
             </div>
-
             <div class="word-card">
-                <!-- Typing area: letter boxes + speak button -->
                 <div class="typing-area">
-                    <div id="letter-boxes" class="letter-boxes"></div>
-                    <button id="speak-btn" class="speak-btn">🔊</button>
+                    <div id="letter-boxes" class="letter-boxes" aria-label="拼写输入区域"></div>
+                    <button id="speak-btn" class="speak-btn" type="button" aria-label="朗读当前单词">🔊</button>
                 </div>
-
-                <!-- Hidden input that captures typing -->
-                <input type="text" id="hidden-input" class="hidden-input" autocomplete="off" inputmode="text">
-
+                <input type="text" id="hidden-input" class="hidden-input" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="text" aria-label="输入听到的单词">
                 <div class="button-group">
-                    <button id="action-btn" class="action-btn">Check</button>
-                    <button id="show-answer-btn" class="show-answer-btn">Answer</button>
+                    <button id="action-btn" class="action-btn" type="button">Check</button>
+                    <button id="show-answer-btn" class="show-answer-btn" type="button">Answer</button>
                 </div>
-
-                <div id="message" class="message"></div>
-                <div id="translation" class="translation"></div>
+                <div id="message" class="message" aria-live="polite"></div>
+                <div id="translation" class="translation" aria-live="polite"></div>
                 <div id="tip" class="tip"></div>
             </div>
         </main>
-        <footer class="footer">
-            <p>Designed & Developed By <span>Jimmy Wu</span> © 2026</p>
-        </footer>
+        <footer class="footer"><p>Designed &amp; Developed By <span>Jimmy Wu</span> © 2026</p></footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

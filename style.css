@@ -352,3 +352,14 @@ h1 {
         padding: 10px 20px;
     }
 }
+
+/* Accessibility and state fixes */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.tip:empty { display:none; }
+.speak-btn:disabled { cursor:not-allowed; opacity:.45; }
+.letter-box[data-space="true"] { border-bottom-color:transparent; }
+@media (max-width:600px) {
+  .info-bar { gap:8px; padding:10px 12px; }
+  .info-bar span { flex-wrap:wrap; }
+  .action-btn,.show-answer-btn { min-width:130px; padding:12px 22px; }
+}
