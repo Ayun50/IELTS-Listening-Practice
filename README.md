@@ -4,7 +4,7 @@
 
 ## 本版本包含
 
-- 剑桥雅思 21–4 词汇列表，根据听力答案词汇整理并人工排除选择题字母、电话号码、邮编和一次性人名
+- 剑桥雅思 20–4 词汇列表，其中 16–4 根据听力答案词汇整理并人工排除选择题字母、电话号码、邮编和一次性人名
 - 英美拼写、单复数和其他可接受形式通过 `variants` 字段统一处理
 - 多词词组和不同长度变体的动态拼写框
 - 首次作答正确率、计时、显示答案和一轮完成提示
@@ -46,4 +46,4 @@ python -m http.server 8000
 └── README.md
 ```
 
-MIT License. Designed & Developed by Jimmy Wu © 2025.
+MIT License. Designed & Developed by Jimmy Wu © 2026.

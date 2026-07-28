@@ -281,6 +281,10 @@ h1 {
     margin-top: 8px;
 }
 
+.tip:empty {
+    display: none;
+}
+
 /* ========== MEDIA QUERIES ========== */
 
 /* Phones (max-width: 600px) */

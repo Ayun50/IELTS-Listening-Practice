@@ -171,18 +171,28 @@ function loadThemeWords(wordArray, themeName) {
 function loadWord(index) {
     currentWordObject = filteredWords[index] || null;
     if (!currentWordObject) return;
+
     hasAttemptedCurrent = false;
     answeredCorrectly = false;
     mode = "check";
+
     hiddenInput.value = "";
     hiddenInput.disabled = false;
+
     actionBtn.disabled = false;
     actionBtn.textContent = "Check";
+
     showAnswerBtn.disabled = false;
     speakBtn.disabled = false;
+
     translationDiv.textContent = "";
-    tipDiv.textContent = "";
+
+    tipDiv.textContent = currentWordObject.caseSensitive
+        ? "⚠️ 注意：礼拜、月份、国家区分大小写"
+        : "";
+
     setMessage("");
+
     renderLetterBoxes(currentWordObject.word, "");
     hiddenInput.focus();
     speakWord(currentWordObject.word);
